@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>个人展示平台 | 上海杉达学院 · 计算机科学与技术</title>
+<meta name="description" content="上海杉达学院计算机科学与技术专业学生个人展示平台：HarmonyOS 应用开发、项目作品集、个人能力。" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%236366f1'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='bold'>刘</text></svg>" />
+</head>
+<body>
+
+<div class="bg-orbs" aria-hidden="true">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="grid-overlay"></div>
+</div>
+
+<header class="nav" id="topNav">
+  <div class="container nav-inner">
+    <a class="brand" href="#home">
+      <span class="brand-logo">刘</span>
+      <span class="brand-text">My<span class="accent">Portfolio</span></span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home" class="active">首页</a>
+      <a href="#about">关于我</a>
+      <a href="#skills">能力</a>
+      <a href="#projects">项目</a>
+      <a href="#journey">经历</a>
+      <a href="#contact">联系</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="themeBtn" title="切换主题" aria-label="切换主题">◐</button>
+      <a class="btn btn-small btn-primary" href="#contact">联系我</a>
+      <button class="hamburger" id="hamburger" aria-label="菜单"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ============ HERO ============ -->
+<section class="hero container" id="home">
+  <div class="hero-left">
+    <div class="badge-row">
+      <span class="pill pill-live"><span class="dot"></span>求职 / 实习中 · 可约面试</span>
+      <span class="pill">上海 · 杉达学院</span>
+    </div>
+    <h1 class="hero-title">
+      你好，我是 <span class="gradient-text" id="userName">刘俊材</span><br>
+      <span class="typing-wrap">专注 <span class="typing" id="typing"></span><span class="caret">|</span></span>
+    </h1>
+    <p class="hero-desc">
+      上海杉达学院 <b>计算机科学与技术</b> 专业学生，HarmonyOS 应用开发者。
+      已上架 <b>「快背单词」</b> 背词应用，主导开发 <b>「Query Software」</b> 公共资源查询应用。
+      热爱用代码解决真实问题，持续打磨产品体验。
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn btn-primary">查看我的项目 →</a>
+      <a href="#" class="btn btn-ghost" id="printBtn">🖨 导出简历 / 打印</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><strong data-count="2">0</strong><span>HarmonyOS App<br>已上架 / 开发</span></div>
+      <div class="stat"><strong data-count="6">0</strong><span>累计项目<br>作品</span></div>
+      <div class="stat"><strong data-count="3">0</strong><span>掌握技术栈<br>方向</span></div>
+      <div class="stat"><strong>∞</strong><span>持续学习<br>与热爱</span></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="profile-card">
+      <div class="profile-top">
+        <div class="avatar">刘</div>
+        <div>
+          <h3 id="cardName">刘俊材</h3>
+          <p>CS · 上海杉达学院</p>
+          <div class="tags"><span>HarmonyOS</span><span>ArkTS</span><span>ArkUI</span></div>
+        </div>
+        <span class="open-badge">OPEN<br>TO<br>WORK</span>
+      </div>
+      <div class="code-window">
+        <div class="code-bar"><i></i><i></i><i></i><span>developer.ets</span></div>
+<pre><code><span class="k">const</span> developer = {
+  school: <span class="s">"上海杉达学院"</span>,
+  major: <span class="s">"计算机科学与技术"</span>,
+  stack: [<span class="s">"ArkTS"</span>, <span class="s">"ArkUI"</span>, <span class="s">"Java"</span>],
+  apps: [<span class="s">"快背单词"</span>, <span class="s">"Query Software"</span>],
+  passion: <span class="s">"打造好用的鸿蒙应用"</span>,
+  hireable: <span class="b">true</span>
+};</code></pre>
+      </div>
+      <div class="profile-links">
+        <a href="#projects">📱 快背单词</a>
+        <a href="#projects">🔍 Query Software</a>
+        <a href="#contact">✉️ 联系我</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="section container" id="about">
+  <p class="eyebrow">ABOUT ME · 关于我</p>
+  <h2 class="sec-title">不止会写代码，<span class="gradient-text">更懂做产品</span></h2>
+  <div class="about-grid">
+    <div class="card about-main">
+      <h3>👋 个人简介</h3>
+      <p>我是上海杉达学院计算机科学与技术专业 2025 级的一名学生，对移动端开发充满兴趣，目前全面投入 <b>HarmonyOS</b> 生态，系统学习 ArkTS 语言与 ArkUI 声明式 UI 开发。</p>
+      <p>我独立完成了背词类应用 <b>「快背单词」</b> 并成功上架华为应用市场，从需求分析、UI 设计、编码到上架审核全流程独立负责；随后主导开发了公共资源聚合查询工具 <b>「Query Software」</b>，帮助用户高效检索公共资源。</p>
+      <div class="info-list">
+        <div><span>🎓 学校</span><b>上海杉达学院</b></div>
+        <div><span>💻 专业</span><b>计算机科学与技术</b></div>
+        <div><span>📍 城市</span><b>上海</b></div>
+        <div><span>🎯 求职意向</span><b>鸿蒙开发 / 前端开发 / 实习</b></div>
+      </div>
+      <p class="tip">💡 <b>提示：</b>姓名、邮箱、GitHub 等信息已填好，如需修改电话、微信二维码等，可编辑 <code>js/main.js</code> 顶部 <code>SITE_CONFIG</code>。</p>
+    </div>
+    <div class="about-side">
+      <div class="card mini-card">
+        <h4>🚀 我能为团队带来</h4>
+        <ul>
+          <li><b>独立闭环能力</b> — 从想法到上架全流程经验</li>
+          <li><b>鸿蒙生态先发优势</b> — ArkTS / Stage 模型 / 分布式能力</li>
+          <li><b>产品思维</b> — 关注留存、启动速度与用户反馈</li>
+        </ul>
+      </div>
+      <div class="card mini-card">
+        <h4>🏆 高光时刻</h4>
+        <ul class="timeline-mini">
+          <li><span>2026</span>「快背单词」上架华为应用市场</li>
+          <li><span>2025</span> 完成「Query Software」公共资源查询 App</li>
+          <li><span>2025</span> 入学上海杉达学院，开启 HarmonyOS 之路</li>
+        </ul>
+      </div>
+      <div class="card mini-card interests">
+        <h4>❤️ 兴趣标签</h4>
+        <div class="tags big"><span>📱 鸿蒙开发</span><span>🎨 UI 设计</span><span>📚 英语学习</span><span>🌍 开源</span><span>🏸 羽毛球</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section class="section container" id="skills">
+  <p class="eyebrow">SKILLS · 个人能力</p>
+  <h2 class="sec-title">我的<span class="gradient-text">技术武器库</span></h2>
+  <p class="sec-sub">按熟练度展示，条形越长代表越擅长。所有数据可在 <code>js/main.js</code> 中自由调整。</p>
+  <div class="skills-grid" id="skillsGrid"></div>
+  <div class="ability-grid">
+    <div class="card ability"><div class="a-icon">📱</div><h4>HarmonyOS 应用开发</h4><p>ArkTS / ArkUI / Stage 模型 / Ability 生命周期 / 本地数据持久化 / 应用上架全流程（签名、审核、版本迭代）。</p></div>
+    <div class="card ability"><div class="a-icon">🎨</div><h4>前端开发</h4><p>HTML / CSS / JavaScript，响应式布局，了解 Vue 思想，能独立搭建个人站点与管理后台页面。</p></div>
+    <div class="card ability"><div class="a-icon">🛠</div><h4>工程与工具</h4><p>DevEco Studio / Git / Postman / 华为 AppGallery Connect，熟悉 REST API 对接、JSON 解析与异步编程。</p></div>
+    <div class="card ability"><div class="a-icon">🧠</div><h4>CS 基础</h4><p>数据结构、操作系统、计算机网络、数据库（MySQL），具备扎实的编程基础与文档阅读能力。</p></div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section class="section container" id="projects">
+  <p class="eyebrow">PORTFOLIO · 项目作品</p>
+  <h2 class="sec-title">我做过的<span class="gradient-text">所有项目</span></h2>
+  <p class="sec-sub">点击卡片查看详情。新增项目只需在 <code>js/main.js</code> 的 <code>PROJECTS</code> 数组里加一条数据，页面自动渲染。</p>
+  <div class="filter-row" id="filterRow">
+    <button class="filter active" data-filter="all">全部</button>
+    <button class="filter" data-filter="harmonyos">HarmonyOS</button>
+    <button class="filter" data-filter="tool">工具效率</button>
+    <button class="filter" data-filter="study">学习成长</button>
+    <button class="filter" data-filter="web">Web</button>
+  </div>
+  <div class="projects-grid" id="projectsGrid"></div>
+</section>
+
+<!-- ============ JOURNEY ============ -->
+<section class="section container" id="journey">
+  <p class="eyebrow">JOURNEY · 成长经历</p>
+  <h2 class="sec-title">我的<span class="gradient-text">开发之路</span></h2>
+  <div class="timeline" id="timeline"></div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="section container" id="contact">
+  <p class="eyebrow">CONTACT · 联系我</p>
+  <h2 class="sec-title">让我们<span class="gradient-text">一起做点酷的事</span></h2>
+  <div class="contact-grid">
+    <div class="card contact-card">
+      <h3>📬 联系方式</h3>
+      <p class="muted">实习、合作、交流都欢迎，看到后 24 小时内回复。</p>
+      <div class="contact-items" id="contactItems"></div>
+      <div class="qr-row">
+        <div class="qr-placeholder">微信二维码<br><small>替换为你的二维码图片</small></div>
+        <div>
+          <b>添加微信请备注</b>
+          <p class="muted">「杉达 - 合作 / 实习」通过率更高哦。也可以直接点击右侧按钮一键发邮件。</p>
+        </div>
+      </div>
+    </div>
+    <div class="card contact-card">
+      <h3>✉️ 快速留言</h3>
+      <p class="muted">表单会调用本地邮件客户端发送，无需后端。</p>
+      <form id="msgForm">
+        <label>你的名字<input required name="name" placeholder="例如：HR 小王" /></label>
+        <label>联系方式<input required name="contact" placeholder="邮箱 / 电话 / 微信" /></label>
+        <label>想说的话<textarea required name="msg" rows="4" placeholder="你好，我看中了你的快背单词项目，想约个面试…"></textarea></label>
+        <button class="btn btn-primary" type="submit">发送留言 →</button>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <p>© <span id="year"></span> <span id="footName">刘俊材</span> · 上海杉达学院 · 用 ❤️ 与 ArkTS 构建</p>
+    <button class="icon-btn" id="backTop" title="回到顶部">↑</button>
+  </div>
+</footer>
+
+<!-- 项目详情弹窗 -->
+<div class="modal-mask" id="modalMask">
+  <div class="modal" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
