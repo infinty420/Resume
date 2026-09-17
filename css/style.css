@@ -173,6 +173,14 @@ a{color:inherit;text-decoration:none}
 .modal h4{margin:16px 0 8px}
 .modal ul{margin-left:20px;color:var(--muted);font-size:14px;display:flex;flex-direction:column;gap:6px}
 .modal .m-actions{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+/* screenshot gallery + arch list */
+.shot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:6px}
+.shot-grid figure{border:1px solid var(--card-border);border-radius:14px;overflow:hidden;background:var(--card)}
+.shot-grid img{width:100%;height:220px;object-fit:cover;object-position:top;display:block;cursor:zoom-in;transition:.25s}
+.shot-grid img:hover{transform:scale(1.03)}
+.shot-grid figcaption{font-size:12px;color:var(--muted);padding:8px 10px;line-height:1.5}
+.arch-list code,.modal p code{background:rgba(99,102,241,.15);padding:1px 7px;border-radius:6px;font-size:.86em;font-family:"JetBrains Mono",monospace}
+@media(max-width:640px){.shot-grid{grid-template-columns:1fr}.shot-grid img{height:auto;max-height:420px}}
 /* reveal */
 .reveal{opacity:0;transform:translateY(26px);transition:.7s ease}
 .reveal.vis{opacity:1;transform:none}

@@ -40,10 +40,35 @@ const PROJECTS = [
     catLabel: "HarmonyOS",
     featured: true,
     status: "已上架 · 华为应用市场",
-    tech: ["ArkTS", "ArkUI", "Preferences", "Router"],
-    brief: "已上架的鸿蒙背词应用：艾宾浩斯记忆曲线 + 离线词库 + 学习统计，累计用户破千。",
-    highlights: ["基于艾宾浩斯遗忘曲线编排复习计划，记忆留存率提升显著", "内置 CET-4 / CET-6 / 考研离线词库，零流量背词", "学习日历 + 连续打卡 + 正确率统计，激励持续学习", "独立完成签名、AGC 上架、审核与 3 次版本迭代"],
-    role: "独立开发（需求 / 设计 / 编码 / 上架）",
+    tech: ["ArkTS", "ArkUI", "Preferences", "TTS 朗读", "rawfile 离线词库", "艾宾浩斯调度"],
+    brief: "已上架的鸿蒙离线背词应用：首页 / 背词 / 自测 / 统计 / 设置五大 Tab，内置高考 / 四级 / 考研三套离线词书，艾宾浩斯间隔 [1, 2, 4, 7, 15, 30] 天编排复习，到期优先 + 新词补足组建学习队列。",
+    highlights: [
+      "艾宾浩斯复习调度：认识升级（最高 6 级掌握）、不认识归零当日重学，到期复习优先、新词补足每日目标",
+      "三套内置离线词书（高考 / 四级 / 考研，rawfile JSON），支持 TXT / JSON 自助导入词书、同名覆盖、去重",
+      "每日一词（日期哈希确定性选取）+ TTS 朗读、签到打卡 + 连续天数、成就解锁弹窗",
+      "统计页：近 7 天学习柱状、正确率、遗忘词（超 7 天未复习）、日均量；设置页支持换肤、字号、日目标、数据重置",
+      "Preferences 持久化：设置 / 签到 / 复习记录 / 单词进度 / 导入词书 / 成就 / 自测计数，云备份 Ability 兜底",
+      "独立完成应用签名、AGC 上架、审核与多轮版本迭代（包名 com.example.firstt，v1.0.0）",
+    ],
+    role: "独立开发（需求 / 设计 / 编码 / 上架全流程）",
+    arch: [
+      "pages/Index.ets —— 入口：异步初始化 7 大服务 + 底部 5 Tab 容器",
+      "view/HomePage.ets —— 学习指标、今日任务、每日一词、词书切换、签到",
+      "view/StudyPage.ets —— 学习队列：到期复习词优先展示",
+      "view/QuizPage.ets —— 四选一自测（5 / 10 / 20 题档）",
+      "view/StatsPage.ets —— 7 天趋势、正确率、遗忘词统计",
+      "service/ReviewSchedulerService.ets —— 艾宾浩斯调度核心",
+      "service/WordBookService.ets —— rawfile 词书加载 + 导入解析",
+      "service/StorageService.ets —— Preferences 持久化",
+      "service/CheckInService / AchievementService / QuizService / TtsService",
+    ],
+    files: ["StudyPage", "QuizPage", "StatsPage", "ReviewScheduler", "WordBook", "Storage", "Tts", "CheckIn", "Achievement"],
+    shots: [
+      { src: "images/kuaibei-home.jpeg", caption: "首页：学习指标 + 每日一词 + 词书切换" },
+      { src: "images/kuaibei-home-v2.jpeg", caption: "首页 v2：签到打卡与任务入口" },
+      { src: "images/kuaibei-stats.jpeg", caption: "统计页：学习趋势与正确率" },
+    ],
+    sourceDir: "C:\\Users\\infinty\\firstt",
     demo: "#",
     code: "#",
   },
@@ -215,7 +240,7 @@ $("#filterRow").addEventListener("click", (e) => {
   renderProjects(btn.dataset.filter);
 });
 
-/* 弹窗 */
+/* 弹窗（含截图画廊 + 架构清单 + 源码目录） */
 function openModal(id) {
   const p = PROJECTS.find((x) => x.id === id);
   if (!p) return;
@@ -224,8 +249,12 @@ function openModal(id) {
     <p class="eyebrow">${p.catLabel} · ${p.status}</p>
     <h2>${p.name}</h2>
     <p>${p.brief}</p>
+    ${p.shots ? `<h4>📸 应用截图</h4><div class="shot-grid">${p.shots.map((s) => `
+      <figure><img src="${s.src}" alt="${s.caption}" loading="lazy" /><figcaption>${s.caption}</figcaption></figure>`).join("")}</div>` : ""}
     <h4>✨ 项目亮点</h4>
     <ul>${p.highlights.map((h) => `<li>${h}</li>`).join("")}</ul>
+    ${p.arch ? `<h4>🧩 核心模块（源码对照）</h4><ul class="arch-list">${p.arch.map((a) => `<li><code>${a}</code></li>`).join("")}</ul>
+    <p class="muted">📁 本地源码目录：<code>${p.sourceDir}</code></p>` : ""}
     <h4>🧑‍💻 我的职责</h4><p>${p.role}</p>
     <h4>🛠 技术栈</h4>
     <div class="proj-tech">${p.tech.map((t) => `<span>${t}</span>`).join("")}</div>
