@@ -69,8 +69,10 @@ const PROJECTS = [
       { src: "images/kuaibei-stats.jpeg", caption: "统计页：学习趋势与正确率" },
     ],
     sourceDir: "C:\\Users\\infinty\\firstt",
-    demo: "#",
-    code: "#",
+    demo: "downloads/kuaibei-words-v1.0.0.app",
+    demoLabel: "📲 下载安装包（.app 签名版）",
+    code: "projects/kuaibei/",
+    codeLabel: "💻 在线浏览源码",
   },
   {
     id: "query",
@@ -259,8 +261,10 @@ function openModal(id) {
     <h4>🛠 技术栈</h4>
     <div class="proj-tech">${p.tech.map((t) => `<span>${t}</span>`).join("")}</div>
     <div class="m-actions">
-      <a class="btn btn-primary btn-small" href="${p.demo}" target="_blank">🔗 演示 / 下载</a>
-      <a class="btn btn-ghost btn-small" href="${p.code}" target="_blank">💻 查看源码</a>
+      ${p.demo && p.demo !== "#" ? `<a class="btn btn-primary btn-small" href="${p.demo}" ${p.demo.startsWith("http") ? 'target="_blank"' : "download"}>${p.demoLabel || "🔗 演示 / 下载"}</a>`
+        : `<button class="btn btn-primary btn-small" disabled style="opacity:.5;cursor:not-allowed" title="暂未提供">🔗 演示 / 下载（待补充）</button>`}
+      ${p.code && p.code !== "#" ? `<a class="btn btn-ghost btn-small" href="${p.code}" ${p.code.startsWith("http") ? 'target="_blank"' : ""}>${p.codeLabel || "💻 查看源码"}</a>`
+        : `<button class="btn btn-ghost btn-small" disabled style="opacity:.5;cursor:not-allowed" title="暂未提供">💻 查看源码（待补充）</button>`}
     </div>`;
   $("#modalMask").classList.add("show");
   document.body.style.overflow = "hidden";

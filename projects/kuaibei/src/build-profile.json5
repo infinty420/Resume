@@ -1,0 +1,56 @@
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "storeFile": "D:/key/ANTIMATTER.p12",
+          "storePassword": "0000001987A4BDCB194BB097692B61A85F8E6DCCC0DCF3D3B696CE3185132C442343574578036C49E6",
+          "keyAlias": "infinty",
+          "keyPassword": "00000019F08E72577E0EBF0F89D0B6AF750D1FC39AF65C4D43E0B716EA42196D21C76AC4076646430A",
+          "signAlg": "SHA256withECDSA",
+          "profile": "D:/kuaibei03Release (1).p7b",
+          "certpath": "D:/fabu (1).cer"
+        }
+      }
+    ],
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "targetSdkVersion": "6.0.1(21)",
+        "compatibleSdkVersion": "6.0.0(20)",
+        "runtimeOS": "HarmonyOS",
+        "buildOption": {
+          "strictMode": {
+            "caseSensitiveCheck": true,
+            "useNormalizedOHMUrl": true
+          }
+        }
+      }
+    ],
+    "buildModeSet": [
+      {
+        "name": "debug",
+      },
+      {
+        "name": "release"
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    }
+  ]
+}

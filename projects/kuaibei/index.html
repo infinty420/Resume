@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>快背单词 · 源码浏览 | 刘俊材的作品集</title>
+<meta name="description" content="快背单词 HarmonyOS 应用源码在线浏览：Index 入口、艾宾浩斯调度、词书服务、持久化服务等 24 个 ArkTS 文件。" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css" />
+<style>
+.src-layout{display:grid;grid-template-columns:300px 1fr;gap:18px;align-items:start;padding:28px 24px 60px}
+.file-tree{position:sticky;top:calc(var(--nav-h) + 16px);max-height:calc(100vh - var(--nav-h) - 32px);overflow:auto;padding:16px}
+.file-tree h3{font-size:15px;margin-bottom:4px}
+.file-tree .muted{font-size:12.5px;margin-bottom:12px;display:block}
+.file-group{font-size:12px;font-weight:700;color:var(--accent);font-family:"JetBrains Mono",monospace;margin:14px 0 6px;letter-spacing:1px}
+.file-item{display:flex;justify-content:space-between;gap:8px;width:100%;text-align:left;font-size:13.5px;padding:8px 10px;border-radius:10px;border:1px solid transparent;background:transparent;color:var(--text);cursor:pointer;font-family:"JetBrains Mono",monospace;transition:.15s}
+.file-item small{color:var(--muted);flex-shrink:0}
+.file-item:hover{background:rgba(99,102,241,.1)}
+.file-item.active{background:rgba(99,102,241,.18);border-color:rgba(99,102,241,.45)}
+.viewer{min-width:0}
+.viewer-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.viewer-head code{font-family:"JetBrains Mono",monospace;font-size:13px;background:rgba(99,102,241,.15);padding:4px 12px;border-radius:8px}
+.viewer-head .muted{font-size:12.5px}
+.viewer-actions{margin-left:auto;display:flex;gap:8px}
+.code-view{border:1px solid var(--card-border);border-radius:16px;overflow:hidden;background:#0a0f24}
+.code-view .code-bar{position:sticky;top:0}
+.code-view pre{padding:18px;font-size:12.8px;line-height:1.75;overflow:auto;max-height:70vh;font-family:"JetBrains Mono",monospace;color:#dbe2ff;margin:0}
+.code-view .ln{color:#4c5680;user-select:none;display:inline-block;width:3ch;margin-right:14px;text-align:right}
+.code-view .c{color:#5b647e;font-style:italic}
+.install-card{margin-top:18px}
+.install-card ol{margin:8px 0 14px 20px;font-size:14px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+.install-card ol b{color:var(--text)}
+@media(max-width:900px){.src-layout{grid-template-columns:1fr}.file-tree{position:static;max-height:none}}
+</style>
+</head>
+<body>
+<div class="bg-orbs" aria-hidden="true"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div><div class="grid-overlay"></div></div>
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="../index.html"><span class="brand-logo">刘</span><span class="brand-text">My<span class="accent">Portfolio</span></span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="../index.html#home">首页</a>
+      <a href="../index.html#projects">项目</a>
+      <a href="../index.html#contact">联系</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="themeBtn" title="切换主题">◐</button>
+      <a class="btn btn-small btn-primary" href="../index.html#contact">联系我</a>
+      <button class="hamburger" id="hamburger" aria-label="菜单"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<main class="container">
+  <section class="section" style="padding-bottom:0">
+    <p class="eyebrow">SOURCE CODE · 快背单词</p>
+    <h2 class="sec-title">📖 快背单词 <span class="gradient-text">源码在线浏览</span></h2>
+    <p class="sec-sub">共 24 个 ArkTS 源码文件 + 应用 / 模块配置，直接从 <code>C:\Users\infinty\firstt</code> 工程原样导入，点击左侧文件名即时查看。包名 <code>com.example.firstt</code> · 版本 <code>1.0.0</code>。</p>
+    <div class="hero-btns" style="margin-bottom:8px">
+      <a class="btn btn-primary btn-small" id="dlApp" href="../downloads/kuaibei-words-v1.0.0.app" download>📲 下载安装包（.app 签名版）</a>
+      <a class="btn btn-ghost btn-small" href="../index.html#projects">← 返回项目列表</a>
+    </div>
+  </section>
+  <div class="src-layout">
+    <aside class="card file-tree">
+      <h3>📁 entry/src/main/ets</h3>
+      <span class="muted">24 个文件 · 按模块分组</span>
+      <div id="fileTree"></div>
+    </aside>
+    <section class="viewer">
+      <div class="viewer-head">
+        <code id="curPath">—</code>
+        <span class="muted" id="curMeta"></span>
+        <div class="viewer-actions">
+          <button class="btn btn-ghost btn-small" id="copyBtn">📋 复制代码</button>
+        </div>
+      </div>
+      <div class="code-view">
+        <div class="code-bar"><i></i><i></i><i></i><span id="curName">source.ets</span></div>
+        <pre id="codePre"><code id="codeBody">加载中…</code></pre>
+      </div>
+      <div class="card install-card">
+        <h4>📲 如何在鸿蒙手机上安装体验</h4>
+        <ol>
+          <li><b>方式一（推荐）：</b>点击顶部「下载安装包」，把 <code>kuaibei-words-v1.0.0.app</code> 传到鸿蒙手机，用系统文件管理打开安装。</li>
+          <li><b>方式二：</b>在 DevEco Studio 中打开 <code>C:\Users\infinty\firstt</code> 工程，连接真机 Run 运行调试。</li>
+          <li>安装包为签名版（422KB，2026-07-08 构建），另有 <a href="../downloads/kuaibei-words-v1.0.0-early.app" download><b>早期版本（147KB）</b></a> 可对照体验迭代过程。</li>
+        </ol>
+        <p class="muted">⚠️ .app 为鸿蒙专用格式，仅 HarmonyOS / OpenHarmony 设备可安装，安卓与 iOS 无法直接运行。</p>
+      </div>
+    </section>
+  </div>
+</main>
+<footer class="footer">
+  <div class="container footer-inner">
+    <p>© <span id="year"></span> 刘俊材 · 上海杉达学院 · 快背单词源码页</p>
+    <button class="icon-btn" id="backTop" title="回到顶部">↑</button>
+  </div>
+</footer>
+<script>
+const FILES = [
+  { group: "PAGES 入口", items: [
+    { path: "src/ets/pages/Index.ets", desc: "应用入口：7 大服务初始化 + 5 Tab", size: "11.3 KB" },
+  ]},
+  { group: "VIEW 五大页面", items: [
+    { path: "src/ets/view/HomePage.ets", desc: "首页：指标 / 任务 / 每日一词 / 签到", size: "12.6 KB" },
+    { path: "src/ets/view/StudyPage.ets", desc: "背词页：到期优先学习队列", size: "8.2 KB" },
+    { path: "src/ets/view/QuizPage.ets", desc: "自测页：四选一 5/10/20 题", size: "19.4 KB" },
+    { path: "src/ets/view/StatsPage.ets", desc: "统计页：7 天趋势 / 正确率 / 遗忘词", size: "14.1 KB" },
+    { path: "src/ets/view/SettingsPage.ets", desc: "设置页：换肤 / 字号 / 日目标 / 重置", size: "13.7 KB" },
+  ]},
+  { group: "SERVICE 核心服务", items: [
+    { path: "src/ets/service/ReviewSchedulerService.ets", desc: "艾宾浩斯调度核心 [1,2,4,7,15,30]", size: "9.9 KB" },
+    { path: "src/ets/service/WordBookService.ets", desc: "词书加载 + TXT/JSON 导入解析", size: "8.0 KB" },
+    { path: "src/ets/service/StorageService.ets", desc: "Preferences 持久化 7 类数据", size: "10.2 KB" },
+    { path: "src/ets/service/QuizService.ets", desc: "自测出题与判分", size: "5.7 KB" },
+    { path: "src/ets/service/CheckInService.ets", desc: "签到打卡与连续天数", size: "4.0 KB" },
+    { path: "src/ets/service/AchievementService.ets", desc: "成就解锁判定", size: "3.7 KB" },
+    { path: "src/ets/service/TtsService.ets", desc: "单词 TTS 朗读", size: "5.7 KB" },
+  ]},
+  { group: "MODEL 数据模型", items: [
+    { path: "src/ets/model/WordModel.ets", desc: "单词 / 词书 / 进度 / 复习记录", size: "3.2 KB" },
+    { path: "src/ets/model/AchievementModel.ets", desc: "成就定义", size: "2.4 KB" },
+  ]},
+  { group: "COMMON 基础", items: [
+    { path: "src/ets/common/AppConstants.ets", desc: "间隔 / 键名 / 内置词书清单", size: "1.6 KB" },
+    { path: "src/ets/common/AppTheme.ets", desc: "主题色与卡片阴影", size: "2.0 KB" },
+    { path: "src/ets/common/DateUtils.ets", desc: "日期键 / 差值 / 近 7 天", size: "3.5 KB" },
+  ]},
+  { group: "WIDGET 组件", items: [
+    { path: "src/ets/widget/WordCard.ets", desc: "单词卡片", size: "3.0 KB" },
+    { path: "src/ets/widget/StatCard.ets", desc: "统计卡片", size: "3.1 KB" },
+    { path: "src/ets/widget/BookItemCard.ets", desc: "词书条目卡片", size: "2.3 KB" },
+    { path: "src/ets/widget/CheckInButton.ets", desc: "签到按钮", size: "0.7 KB" },
+  ]},
+  { group: "ABILITY 能力", items: [
+    { path: "src/ets/entryability/EntryAbility.ets", desc: "主 Ability 生命周期", size: "1.7 KB" },
+    { path: "src/ets/entrybackupability/EntryBackupAbility.ets", desc: "云备份 Ability", size: "0.5 KB" },
+  ]},
+  { group: "CONFIG 配置", items: [
+    { path: "src/app.json5", desc: "应用包名 com.example.firstt v1.0.0", size: "0.2 KB" },
+    { path: "src/module.json5", desc: "entry 模块：Ability 与页面路由", size: "1.1 KB" },
+    { path: "src/build-profile.json5", desc: "构建签名配置", size: "1.3 KB" },
+    { path: "src/entry-string.json", desc: "应用名：快背单词", size: "0.2 KB" },
+  ]},
+];
+const tree = document.getElementById("fileTree");
+const pre = document.getElementById("codePre");
+const body = document.getElementById("codeBody");
+const curPath = document.getElementById("curPath");
+const curMeta = document.getElementById("curMeta");
+const curName = document.getElementById("curName");
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+async function loadFile(item, btn){
+  document.querySelectorAll(".file-item").forEach(b=>b.classList.remove("active"));
+  if(btn) btn.classList.add("active");
+  curPath.textContent = "entry/src/main/ets/" + item.path.replace(/^src\/ets\//,"").replace(/^src\//,"");
+  curMeta.textContent = item.desc + " · " + item.size;
+  curName.textContent = item.path.split("/").pop();
+  body.textContent = "加载中…"; pre.scrollTop = 0;
+  try{
+    const res = await fetch(item.path);
+    if(!res.ok) throw new Error("HTTP "+res.status);
+    const text = await res.text();
+    const lines = esc(text).split("\n");
+    body.innerHTML = lines.map((l,i)=>`<span class="ln">${i+1}</span>${l||" "}`).join("\n");
+  }catch(e){ body.textContent = "加载失败：" + e.message + "（请用 http 服务方式打开本站，如 python -m http.server，直接双击 file:// 下 fetch 会被浏览器拦截）"; }
+}
+FILES.forEach(g=>{
+  const h=document.createElement("div");h.className="file-group";h.textContent=g.group;tree.appendChild(h);
+  g.items.forEach(item=>{
+    const b=document.createElement("button");b.className="file-item";
+    b.innerHTML=`<span>${item.path.split("/").pop()}</span><small>${item.size}</small>`;
+    b.title=item.desc;b.addEventListener("click",()=>loadFile(item,b));tree.appendChild(b);
+  });
+});
+document.getElementById("copyBtn").addEventListener("click",async()=>{
+  try{await navigator.clipboard.writeText(body.innerText);alert("已复制当前文件代码");}catch(e){alert("复制失败："+e.message);}
+});
+document.getElementById("themeBtn").addEventListener("click",()=>{
+  const h=document.documentElement;h.dataset.theme=h.dataset.theme==="dark"?"light":"dark";
+});
+document.getElementById("hamburger").addEventListener("click",()=>document.getElementById("navLinks").classList.toggle("open"));
+document.getElementById("year").textContent=new Date().getFullYear();
+document.getElementById("backTop").addEventListener("click",()=>scrollTo({top:0,behavior:"smooth"}));
+const firstBtn=document.querySelector(".file-item");
+loadFile(FILES[0].items[0],firstBtn);
+</script>
+</body>
+</html>
