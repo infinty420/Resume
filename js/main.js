@@ -71,7 +71,7 @@ const PROJECTS = [
     sourceDir: "C:\\Users\\infinty\\firstt",
     demo: "downloads/kuaibei-words-v1.0.0.app",
     demoLabel: "📲 下载安装包（.app 签名版）",
-    code: "projects/kuaibei/",
+    code: "projects/kuaibei/index.html",
     codeLabel: "💻 在线浏览源码",
   },
   {

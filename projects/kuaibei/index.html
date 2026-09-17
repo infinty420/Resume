@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/style.css" />
+<link rel="stylesheet" href="../../css/style.css" />
 <style>
 .src-layout{display:grid;grid-template-columns:300px 1fr;gap:18px;align-items:start;padding:28px 24px 60px}
 .file-tree{position:sticky;top:calc(var(--nav-h) + 16px);max-height:calc(100vh - var(--nav-h) - 32px);overflow:auto;padding:16px}
@@ -39,15 +39,15 @@
 <div class="bg-orbs" aria-hidden="true"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div><div class="grid-overlay"></div></div>
 <header class="nav">
   <div class="container nav-inner">
-    <a class="brand" href="../index.html"><span class="brand-logo">刘</span><span class="brand-text">My<span class="accent">Portfolio</span></span></a>
+    <a class="brand" href="../../index.html"><span class="brand-logo">刘</span><span class="brand-text">My<span class="accent">Portfolio</span></span></a>
     <nav class="nav-links" id="navLinks">
-      <a href="../index.html#home">首页</a>
-      <a href="../index.html#projects">项目</a>
-      <a href="../index.html#contact">联系</a>
+      <a href="../../index.html#home">首页</a>
+      <a href="../../index.html#projects">项目</a>
+      <a href="../../index.html#contact">联系</a>
     </nav>
     <div class="nav-actions">
       <button class="icon-btn" id="themeBtn" title="切换主题">◐</button>
-      <a class="btn btn-small btn-primary" href="../index.html#contact">联系我</a>
+      <a class="btn btn-small btn-primary" href="../../index.html#contact">联系我</a>
       <button class="hamburger" id="hamburger" aria-label="菜单"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -58,8 +58,8 @@
     <h2 class="sec-title">📖 快背单词 <span class="gradient-text">源码在线浏览</span></h2>
     <p class="sec-sub">共 24 个 ArkTS 源码文件 + 应用 / 模块配置，直接从 <code>C:\Users\infinty\firstt</code> 工程原样导入，点击左侧文件名即时查看。包名 <code>com.example.firstt</code> · 版本 <code>1.0.0</code>。</p>
     <div class="hero-btns" style="margin-bottom:8px">
-      <a class="btn btn-primary btn-small" id="dlApp" href="../downloads/kuaibei-words-v1.0.0.app" download>📲 下载安装包（.app 签名版）</a>
-      <a class="btn btn-ghost btn-small" href="../index.html#projects">← 返回项目列表</a>
+      <a class="btn btn-primary btn-small" id="dlApp" href="../../downloads/kuaibei-words-v1.0.0.app" download>📲 下载安装包（.app 签名版）</a>
+      <a class="btn btn-ghost btn-small" href="../../index.html#projects">← 返回项目列表</a>
     </div>
   </section>
   <div class="src-layout">
@@ -85,7 +85,7 @@
         <ol>
           <li><b>方式一（推荐）：</b>点击顶部「下载安装包」，把 <code>kuaibei-words-v1.0.0.app</code> 传到鸿蒙手机，用系统文件管理打开安装。</li>
           <li><b>方式二：</b>在 DevEco Studio 中打开 <code>C:\Users\infinty\firstt</code> 工程，连接真机 Run 运行调试。</li>
-          <li>安装包为签名版（422KB，2026-07-08 构建），另有 <a href="../downloads/kuaibei-words-v1.0.0-early.app" download><b>早期版本（147KB）</b></a> 可对照体验迭代过程。</li>
+          <li>安装包为签名版（422KB，2026-07-08 构建），另有 <a href="../../downloads/kuaibei-words-v1.0.0-early.app" download><b>早期版本（147KB）</b></a> 可对照体验迭代过程。</li>
         </ol>
         <p class="muted">⚠️ .app 为鸿蒙专用格式，仅 HarmonyOS / OpenHarmony 设备可安装，安卓与 iOS 无法直接运行。</p>
       </div>
@@ -98,6 +98,7 @@
     <button class="icon-btn" id="backTop" title="回到顶部">↑</button>
   </div>
 </footer>
+<script src="files.js"></script>
 <script>
 const FILES = [
   { group: "PAGES 入口", items: [
@@ -152,20 +153,24 @@ const curPath = document.getElementById("curPath");
 const curMeta = document.getElementById("curMeta");
 const curName = document.getElementById("curName");
 function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
-async function loadFile(item, btn){
+function renderCode(text){
+  const lines = esc(text).split("\n");
+  body.innerHTML = lines.map((l,i)=>`<span class="ln">${i+1}</span>${l||" "}`).join("\n");
+}
+function loadFile(item, btn){
   document.querySelectorAll(".file-item").forEach(b=>b.classList.remove("active"));
   if(btn) btn.classList.add("active");
   curPath.textContent = "entry/src/main/ets/" + item.path.replace(/^src\/ets\//,"").replace(/^src\//,"");
   curMeta.textContent = item.desc + " · " + item.size;
   curName.textContent = item.path.split("/").pop();
   body.textContent = "加载中…"; pre.scrollTop = 0;
-  try{
-    const res = await fetch(item.path);
+  // 首选内嵌源码（file:// 双击也能看），缺失时回退到 fetch
+  const embedded = (window.SRC_FILES && window.SRC_FILES[item.path]) || null;
+  if(embedded != null){ renderCode(embedded); return; }
+  fetch(item.path).then(res=>{
     if(!res.ok) throw new Error("HTTP "+res.status);
-    const text = await res.text();
-    const lines = esc(text).split("\n");
-    body.innerHTML = lines.map((l,i)=>`<span class="ln">${i+1}</span>${l||" "}`).join("\n");
-  }catch(e){ body.textContent = "加载失败：" + e.message + "（请用 http 服务方式打开本站，如 python -m http.server，直接双击 file:// 下 fetch 会被浏览器拦截）"; }
+    return res.text();
+  }).then(renderCode).catch(e=>{ body.textContent = "加载失败：" + e.message + "（请用 http 服务方式打开本站，如 python -m http.server，直接双击 file:// 下 fetch 会被浏览器拦截）"; });
 }
 FILES.forEach(g=>{
   const h=document.createElement("div");h.className="file-group";h.textContent=g.group;tree.appendChild(h);
