@@ -1,0 +1,77 @@
+name: Sync GitHub repos to site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "js/main.js"
+      - ".github/workflows/sync-repos.yml"
+  schedule:
+    # 每天 02:00 UTC 自动同步一次
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch public repos and write snapshot
+        env:
+          GH_USER: infinty420
+          GH_EXCLUDE: Resume
+          GH_MAX: "20"
+          GH_SHOW_FORKS: "false"
+        run: |
+          node -e "
+          const fs = require('fs');
+          const user = process.env.GH_USER;
+          const exclude = new Set(process.env.GH_EXCLUDE.split(',').map(s => s.trim().toLowerCase()).filter(Boolean));
+          const max = parseInt(process.env.GH_MAX || '20', 10);
+          const showForks = process.env.GH_SHOW_FORKS === 'true';
+          (async () => {
+            let repos = [];
+            let page = 1;
+            while (true) {
+              const res = await fetch('https://api.github.com/users/' + user + '/repos?per_page=100&sort=pushed&page=' + page, {
+                headers: { 'User-Agent': 'resume-sync', 'Accept': 'application/vnd.github+json' }
+              });
+              if (!res.ok) throw new Error('GitHub API HTTP ' + res.status);
+              const data = await res.json();
+              if (!Array.isArray(data) || !data.length) break;
+              repos = repos.concat(data);
+              if (data.length < 100) break;
+              page++;
+              if (page > 5) break;
+            }
+            const filtered = repos
+              .filter(r => !r.private && !exclude.has(String(r.name).toLowerCase()))
+              .filter(r => showForks ? true : !r.fork)
+              .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at))
+              .slice(0, max)
+              .map(r => ({
+                name: r.name, full_name: r.full_name, description: r.description,
+                language: r.language, html_url: r.html_url, homepage: r.homepage,
+                stargazers_count: r.stargazers_count, forks_count: r.forks_count,
+                pushed_at: r.pushed_at, updated_at: r.updated_at, fork: r.fork,
+                topics: r.topics || []
+              }));
+            fs.mkdirSync('data', { recursive: true });
+            fs.writeFileSync('data/projects.json', JSON.stringify({
+              user, updatedAt: new Date().toISOString(), count: filtered.length, repos: filtered
+            }, null, 2));
+            console.log('synced ' + filtered.length + ' repos for ' + user);
+          })().catch(e => { console.error(e); process.exit(1); });
+          "
+
+      - name: Commit snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/projects.json
+          git diff --staged --quiet && echo "no changes" || git commit -m "chore: auto-sync GitHub repos snapshot"
+          git push

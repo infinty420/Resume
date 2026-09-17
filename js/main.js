@@ -9,6 +9,10 @@ const SITE_CONFIG = {
   email: "1871550500@qq.com",
   phone: "", // 暂未公开，如需展示请填写
   github: "https://github.com/infinty420",
+  githubUser: "infinty420", // GitHub 用户名：自动同步此账号下的公开仓库
+  githubExclude: ["Resume"], // 不同步到项目区的仓库名（本站源码仓库本身）
+  githubMax: 20, // 最多自动展示多少个 GitHub 仓库
+  githubShowForks: false, // 是否展示 fork 来的仓库
   repo: "https://github.com/infinty420/Resume.git",
   gitee: "",
   motto: ["HarmonyOS 应用开发", "ArkTS 全栈之路", "用代码解决真实问题", "独立产品闭环"],
@@ -27,8 +31,8 @@ const SKILLS = [
   { name: "UI / 原型设计", level: 65, desc: "Figma / 墨刀 / 切图" },
 ];
 
-/* 项目：新增项目只需 push 一条，分类(cat)对应筛选按钮
- * cover 用 emoji + gradient 背景；featured 会在封面显示 ★ */
+/* 项目：curated 为手工精选（快背单词 / Query Software），
+ * GitHub 公开仓库通过下方 GITHUB_SYNC 自动追加展示 */
 const PROJECTS = [
   {
     id: "kuaiji",
@@ -100,6 +104,7 @@ const PROJECTS = [
     cat: "tool",
     catLabel: "工具效率",
     featured: false,
+    retired: true, // 非本人作品，已下架，仅保留数据不渲染
     status: "课程设计 · 优秀",
     tech: ["ArkTS", "日历API", "通知"],
     brief: "课程表 + 空教室查询 + 社团活动聚合的校园效率工具，获课程设计优秀。",
@@ -117,6 +122,7 @@ const PROJECTS = [
     cat: "web",
     catLabel: "Web",
     featured: false,
+    retired: true, // 非本人作品，已下架，仅保留数据不渲染
     status: "已上线 · 个人站点",
     tech: ["HTML", "CSS", "JavaScript"],
     brief: "为开发者打造的极简网址导航：分类收录、快捷搜索、一键换肤，纯前端零后端。",
@@ -134,6 +140,7 @@ const PROJECTS = [
     cat: "study",
     catLabel: "学习成长",
     featured: false,
+    retired: true, // 非本人作品，已下架，仅保留数据不渲染
     status: "学习项目 · 开源",
     tech: ["JavaScript", "Canvas"],
     brief: "冒泡 / 快排 / 二分查找动画演示，帮助理解数据结构与算法，配套学习笔记。",
@@ -151,6 +158,7 @@ const PROJECTS = [
     cat: "tool",
     catLabel: "工具效率",
     featured: false,
+    retired: true, // 非本人作品，已下架，仅保留数据不渲染
     status: "练手项目 · 已完成",
     tech: ["ArkTS", "后台任务"],
     brief: "番茄工作法计时器：专注统计、休息提醒、白噪音，第一个鸿蒙练手作品。",
@@ -160,6 +168,115 @@ const PROJECTS = [
     code: "#",
   },
 ];
+
+/* GitHub 自动同步：把 githubUser 下的公开仓库转为项目卡片。
+ * 显示顺序：curated 手工项目在前，GitHub 仓库按更新时间倒序追加。
+ * 数据来源优先级：data/projects.json（Actions 定时生成）> 浏览器直调 GitHub API。
+ * 想恢复某个 retired 项目：删掉它的 retired: true 即可。 */
+const GITHUB_SYNC = { repos: [], loaded: false, source: "" };
+
+function repoToProject(r) {
+  const lang = (r.language || "Code").trim();
+  return {
+    id: "gh-" + r.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "gh-repo",
+    name: r.name,
+    en: r.full_name,
+    emoji: "🐙",
+    gradient: pickGradient(r.name),
+    cat: "github",
+    catLabel: "GitHub · 自动同步",
+    featured: false,
+    fromGitHub: true,
+    status: (r.stargazers_count > 0 ? `★ ${r.stargazers_count} · ` : "") + (r.language || "代码仓库"),
+    tech: [lang, ...(r.topics || []).slice(0, 4)],
+    brief: r.description && r.description.trim() ? r.description.trim() : "GitHub 上的开源仓库，点击查看详情进入代码主页。",
+    highlights: [
+      `仓库地址：${r.full_name}`,
+      `主要语言：${r.language || "未识别"}`,
+      `Star ${r.stargazers_count} · Fork ${r.forks_count} · 最近推送 ${formatDate(r.pushed_at)}`,
+      r.homepage ? `项目主页：${r.homepage}` : "持续更新中，欢迎 Star 与 Issue 交流。",
+    ],
+    role: r.fork ? "Fork 学习 / 二次开发" : "个人开源项目（GitHub 自动同步）",
+    updatedAt: r.pushed_at,
+    demo: r.homepage && /^https?:\/\//i.test(r.homepage) ? r.homepage : r.html_url,
+    demoLabel: "🔗 打开仓库主页",
+    code: r.html_url,
+    codeLabel: "💻 查看代码",
+  };
+}
+
+function pickGradient(seed) {
+  const palettes = [
+    "linear-gradient(135deg,#6366f1,#22d3ee)",
+    "linear-gradient(135deg,#a855f7,#ec4899)",
+    "linear-gradient(135deg,#22d3ee,#34d399)",
+    "linear-gradient(135deg,#f59e0b,#ef4444)",
+    "linear-gradient(135deg,#10b981,#6366f1)",
+    "linear-gradient(135deg,#ec4899,#f43f5e)",
+    "linear-gradient(135deg,#0ea5e9,#6366f1)",
+    "linear-gradient(135deg,#84cc16,#10b981)",
+  ];
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) >>> 0;
+  return palettes[h % palettes.length];
+}
+
+function formatDate(iso) {
+  if (!iso) return "未知";
+  const d = new Date(iso);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+/* 当前生效的项目列表：过滤 retired，追加 GitHub 同步项 */
+function activeProjects() {
+  const curated = PROJECTS.filter((p) => !p.retired);
+  if (!GITHUB_SYNC.repos.length) return curated;
+  const seen = new Set(curated.map((p) => p.id));
+  const gh = GITHUB_SYNC.repos.map(repoToProject).filter((p) => !seen.has(p.id));
+  return curated.concat(gh);
+}
+
+async function loadGitHubRepos() {
+  const user = SITE_CONFIG.githubUser;
+  if (!user) { GITHUB_SYNC.loaded = true; return; }
+  // 1) 先读 Actions 生成的静态快照（无跨域、无限流、离线可看），先渲染
+  try {
+    const res = await fetch("data/projects.json", { cache: "no-store" });
+    if (res.ok) {
+      const data = await res.json();
+      if (data && Array.isArray(data.repos) && data.repos.length) {
+        GITHUB_SYNC.repos = filterRepos(data.repos);
+        GITHUB_SYNC.loaded = true;
+        GITHUB_SYNC.source = `GitHub 快照 · 更新于 ${formatDate(data.updatedAt)}`;
+        renderProjects();
+      }
+    }
+  } catch (e) { /* 快照缺失则直接走 API */ }
+  // 2) 再用浏览器直调 GitHub 公开 API 刷新到最新（60 次/小时限流，失败则保留快照）
+  try {
+    const res = await fetch(`https://api.github.com/users/${user}/repos?per_page=100&sort=pushed`);
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    const fresh = filterRepos(Array.isArray(data) ? data : []);
+    if (fresh.length || !GITHUB_SYNC.repos.length) {
+      GITHUB_SYNC.repos = fresh;
+      GITHUB_SYNC.source = "GitHub API · 实时拉取";
+    }
+    GITHUB_SYNC.loaded = true;
+  } catch (e) {
+    GITHUB_SYNC.loaded = true;
+    if (!GITHUB_SYNC.source) GITHUB_SYNC.source = "";
+  }
+}
+
+function filterRepos(repos) {
+  const exclude = new Set((SITE_CONFIG.githubExclude || []).map((s) => String(s).toLowerCase()));
+  return repos
+    .filter((r) => !r.private && !exclude.has(String(r.name).toLowerCase()))
+    .filter((r) => SITE_CONFIG.githubShowForks ? true : !r.fork)
+    .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at))
+    .slice(0, SITE_CONFIG.githubMax || 20);
+}
 
 /* 成长经历 */
 const TIMELINE = [
@@ -214,14 +331,22 @@ $("#skillsGrid").innerHTML = SKILLS.map((s) => `
     <div class="bar"><i data-w="${s.level}"></i></div>
   </div>`).join("");
 
-/* 项目渲染 + 筛选 */
-function renderProjects(filter = "all") {
-  const list = PROJECTS.filter((p) => filter === "all" || p.cat === filter);
+/* 项目渲染 + 筛选（含 GitHub 自动同步；先渲染精选，同步完成后自动追加） */
+let currentFilter = "all";
+
+function syncBadge(p) {
+  return p.fromGitHub ? `<span class="proj-sync">🔄 同步</span>` : "";
+}
+
+function renderProjects(filter = currentFilter) {
+  currentFilter = filter;
+  const list = activeProjects().filter((p) => filter === "all" || p.cat === filter || (filter === "github" && p.fromGitHub));
   $("#projectsGrid").innerHTML = list.map((p) => `
     <article class="card proj reveal vis" data-id="${p.id}">
       <div class="proj-cover" style="background:${p.gradient}"><span>${p.emoji}</span>
         <span class="proj-flag">${p.catLabel}</span>
         ${p.featured ? `<span class="proj-stars">★ 主打</span>` : ""}
+        ${syncBadge(p)}
       </div>
       <div class="proj-body">
         <h3>${p.name} <small style="color:var(--muted);font-weight:400">· ${p.en}</small></h3>
@@ -229,11 +354,28 @@ function renderProjects(filter = "all") {
         <div class="proj-tech">${p.tech.map((t) => `<span>${t}</span>`).join("")}</div>
         <div class="proj-foot"><span>📌 ${p.status}</span><b>查看详情 →</b></div>
       </div>
-    </article>`).join("");
+    </article>`).join("") || `<div class="card"><p class="muted">该分类暂无项目${GITHUB_SYNC.loaded ? "" : "，GitHub 同步加载中…"}。</p></div>`;
   document.querySelectorAll(".proj").forEach((el) =>
     el.addEventListener("click", () => openModal(el.dataset.id)));
+  updateSyncNote();
 }
+
+function updateSyncNote() {
+  const note = $("#syncNote");
+  if (!note) return;
+  if (!GITHUB_SYNC.loaded) {
+    note.innerHTML = `正在同步 <code>github.com/${SITE_CONFIG.githubUser}</code> 的公开仓库…`;
+  } else if (GITHUB_SYNC.repos.length) {
+    note.innerHTML = `已自动同步 <b>${GITHUB_SYNC.repos.length}</b> 个 GitHub 公开仓库（${GITHUB_SYNC.source}）。仓库有更新时页面会自动跟进，无需手动改代码。`;
+  } else {
+    note.innerHTML = `GitHub 同步暂无数据（可能触发 API 限流或用户名有误），可稍后刷新重试。`;
+  }
+  const stat = $("#projCountStat");
+  if (stat) stat.textContent = String(activeProjects().length);
+}
+
 renderProjects();
+loadGitHubRepos().then(() => renderProjects());
 $("#filterRow").addEventListener("click", (e) => {
   const btn = e.target.closest(".filter");
   if (!btn) return;
@@ -243,8 +385,11 @@ $("#filterRow").addEventListener("click", (e) => {
 });
 
 /* 弹窗（含截图画廊 + 架构清单 + 源码目录） */
+function findProject(id) {
+  return activeProjects().find((x) => x.id === id);
+}
 function openModal(id) {
-  const p = PROJECTS.find((x) => x.id === id);
+  const p = findProject(id);
   if (!p) return;
   $("#modalBody").innerHTML = `
     <div class="m-cover" style="background:${p.gradient}"><span>${p.emoji}</span></div>

@@ -65,7 +65,7 @@
     </div>
     <div class="hero-stats">
       <div class="stat"><strong data-count="2">0</strong><span>HarmonyOS App<br>已上架 / 开发</span></div>
-      <div class="stat"><strong data-count="6">0</strong><span>累计项目<br>作品</span></div>
+      <div class="stat"><strong id="projCountStat">2</strong><span>展示项目<br>精选 + GitHub 同步</span></div>
       <div class="stat"><strong data-count="3">0</strong><span>掌握技术栈<br>方向</span></div>
       <div class="stat"><strong>∞</strong><span>持续学习<br>与热爱</span></div>
     </div>
@@ -161,13 +161,12 @@
 <section class="section container" id="projects">
   <p class="eyebrow">PORTFOLIO · 项目作品</p>
   <h2 class="sec-title">我做过的<span class="gradient-text">所有项目</span></h2>
-  <p class="sec-sub">点击卡片查看详情。新增项目只需在 <code>js/main.js</code> 的 <code>PROJECTS</code> 数组里加一条数据，页面自动渲染。</p>
+  <p class="sec-sub">精选项目手工维护，GitHub 公开仓库自动同步追加。点击卡片查看详情，手工加项目改 <code>js/main.js</code> 的 <code>PROJECTS</code> 即可。</p>
+  <div class="sync-note" id="syncNote">正在同步 GitHub 仓库…</div>
   <div class="filter-row" id="filterRow">
     <button class="filter active" data-filter="all">全部</button>
     <button class="filter" data-filter="harmonyos">HarmonyOS</button>
-    <button class="filter" data-filter="tool">工具效率</button>
-    <button class="filter" data-filter="study">学习成长</button>
-    <button class="filter" data-filter="web">Web</button>
+    <button class="filter" data-filter="github">GitHub 同步</button>
   </div>
   <div class="projects-grid" id="projectsGrid"></div>
 </section>
