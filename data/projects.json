@@ -1,8 +1,22 @@
 {
   "user": "infinty420",
-  "updatedAt": "2026-09-17T14:20:17.417Z",
-  "count": 1,
+  "updatedAt": "2026-09-18T02:08:27.352Z",
+  "count": 2,
   "repos": [
+    {
+      "name": "kuaibeidanci",
+      "full_name": "infinty420/kuaibeidanci",
+      "description": "是一款专为英语单词学习打造的鸿蒙应用，支持离线背词、自测练习、学习统计和每日签到等功能，帮助用户高效、系统地进行单词记忆与复习。  应用采用卡片式学习流程，支持“认识 / 不认识”快速标记，并结合艾宾浩斯遗忘曲线进行智能复习安排，让用户在合适的时间重复记忆重点单词，提升背词效率。除此之外，应用还提供英译汉、汉译英、默写等多种自测模式，满足不同阶段的学习需求。  在学习管理方面，应用内置今日学习量、连续签到、已掌握单词数等统计信息，帮助用户直观掌握学习进度。同时支持深色模式、字体大小调整和每日目标词数设置，兼顾实用性与个性化体验。  整款应用基于鸿蒙平台开发，支持本地离线使用，无需网络即可随时学习，适合学生、考研党以及需要长期积累英语词汇的用户使用。",
+      "language": null,
+      "html_url": "https://github.com/infinty420/kuaibeidanci",
+      "homepage": null,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "pushed_at": "2026-09-17T14:49:37Z",
+      "updated_at": "2026-09-17T14:49:41Z",
+      "fork": false,
+      "topics": []
+    },
     {
       "name": "Personalweb",
       "full_name": "infinty420/Personalweb",
