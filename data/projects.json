@@ -1,8 +1,22 @@
 {
   "user": "infinty420",
-  "updatedAt": "2026-09-18T02:08:27.352Z",
-  "count": 2,
+  "updatedAt": "2026-09-19T02:08:21.125Z",
+  "count": 3,
   "repos": [
+    {
+      "name": "Query-Software",
+      "full_name": "infinty420/Query-Software",
+      "description": "QuerySoftware 是一款运行在 HarmonyOS 上的轻量级「导航 + 翻译」工具，把实时定位、路线规划、附近资源检索、多语种翻译整合在一个清爽的界面里。出门找路、跨境沟通，一个应用就能搞定。",
+      "language": null,
+      "html_url": "https://github.com/infinty420/Query-Software",
+      "homepage": null,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "pushed_at": "2026-09-18T12:24:22Z",
+      "updated_at": "2026-09-18T12:24:25Z",
+      "fork": false,
+      "topics": []
+    },
     {
       "name": "kuaibeidanci",
       "full_name": "infinty420/kuaibeidanci",
@@ -12,8 +26,8 @@
       "homepage": null,
       "stargazers_count": 0,
       "forks_count": 0,
-      "pushed_at": "2026-09-17T14:49:37Z",
-      "updated_at": "2026-09-17T14:49:41Z",
+      "pushed_at": "2026-09-18T03:37:08Z",
+      "updated_at": "2026-09-18T03:37:13Z",
       "fork": false,
       "topics": []
     },
