@@ -1,19 +1,33 @@
 {
   "user": "infinty420",
-  "updatedAt": "2026-10-09T02:09:47.258Z",
-  "count": 8,
+  "updatedAt": "2026-10-10T02:09:16.811Z",
+  "count": 9,
   "repos": [
     {
       "name": "Zhi-Tu",
       "full_name": "infinty420/Zhi-Tu",
       "description": null,
-      "language": null,
+      "language": "JavaScript",
       "html_url": "https://github.com/infinty420/Zhi-Tu",
       "homepage": null,
       "stargazers_count": 0,
       "forks_count": 0,
-      "pushed_at": "2026-10-09T02:09:43Z",
-      "updated_at": "2026-10-08T11:35:26Z",
+      "pushed_at": "2026-10-09T13:15:30Z",
+      "updated_at": "2026-10-09T13:15:35Z",
+      "fork": false,
+      "topics": []
+    },
+    {
+      "name": "xinshui-zhihuan-lightning",
+      "full_name": "infinty420/xinshui-zhihuan-lightning",
+      "description": null,
+      "language": "Python",
+      "html_url": "https://github.com/infinty420/xinshui-zhihuan-lightning",
+      "homepage": null,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "pushed_at": "2026-10-09T12:23:15Z",
+      "updated_at": "2026-10-09T12:23:19Z",
       "fork": false,
       "topics": []
     },
