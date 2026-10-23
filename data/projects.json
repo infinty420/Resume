@@ -1,7 +1,7 @@
 {
   "user": "infinty420",
-  "updatedAt": "2026-10-22T07:02:10.374Z",
-  "count": 12,
+  "updatedAt": "2026-10-23T06:54:17.203Z",
+  "count": 13,
   "repos": [
     {
       "name": "ScienceExperiment",
@@ -12,8 +12,22 @@
       "homepage": null,
       "stargazers_count": 0,
       "forks_count": 0,
-      "pushed_at": "2026-10-18T15:45:10Z",
-      "updated_at": "2026-10-18T15:45:15Z",
+      "pushed_at": "2026-10-23T03:36:01Z",
+      "updated_at": "2026-10-23T03:36:04Z",
+      "fork": false,
+      "topics": []
+    },
+    {
+      "name": "henglian-agent",
+      "full_name": "infinty420/henglian-agent",
+      "description": "衡练 AI 助手：自然语言运动健康 Agent（LangGraph + Tool Calling + MCP，开源AI技术实践课程期末项目）",
+      "language": "Python",
+      "html_url": "https://github.com/infinty420/henglian-agent",
+      "homepage": null,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "pushed_at": "2026-10-23T00:04:51Z",
+      "updated_at": "2026-10-23T00:04:55Z",
       "fork": false,
       "topics": []
     },
