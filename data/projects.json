@@ -1,7 +1,7 @@
 {
   "user": "infinty420",
-  "updatedAt": "2026-11-03T08:58:09.222Z",
-  "count": 13,
+  "updatedAt": "2026-11-04T08:33:53.060Z",
+  "count": 14,
   "repos": [
     {
       "name": "henglian-agent",
@@ -12,8 +12,22 @@
       "homepage": null,
       "stargazers_count": 0,
       "forks_count": 0,
-      "pushed_at": "2026-11-03T05:06:57Z",
-      "updated_at": "2026-11-03T05:06:57Z",
+      "pushed_at": "2026-11-03T10:20:32Z",
+      "updated_at": "2026-11-03T10:20:16Z",
+      "fork": false,
+      "topics": []
+    },
+    {
+      "name": "weizhuanye-final-report",
+      "full_name": "infinty420/weizhuanye-final-report",
+      "description": "微专业期末报告：业务流程图、行业分析报告与项目方案、作业1",
+      "language": null,
+      "html_url": "https://github.com/infinty420/weizhuanye-final-report",
+      "homepage": null,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "pushed_at": "2026-11-03T09:53:39Z",
+      "updated_at": "2026-11-03T09:54:57Z",
       "fork": false,
       "topics": []
     },
