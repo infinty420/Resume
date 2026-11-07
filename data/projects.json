@@ -1,8 +1,22 @@
 {
   "user": "infinty420",
-  "updatedAt": "2026-11-06T08:53:53.589Z",
+  "updatedAt": "2026-11-07T08:16:09.443Z",
   "count": 16,
   "repos": [
+    {
+      "name": "ScienceExperiment",
+      "full_name": "infinty420/ScienceExperiment",
+      "description": "智实验 SciLab - 理科 3D 虚拟实验室（物理/化学/生物/大学实验）PC + HarmonyOS",
+      "language": "HTML",
+      "html_url": "https://github.com/infinty420/ScienceExperiment",
+      "homepage": null,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "pushed_at": "2026-11-06T14:47:43Z",
+      "updated_at": "2026-11-06T14:47:47Z",
+      "fork": false,
+      "topics": []
+    },
     {
       "name": "Zhi-Tu",
       "full_name": "infinty420/Zhi-Tu",
@@ -70,20 +84,6 @@
       "forks_count": 0,
       "pushed_at": "2026-11-03T10:20:32Z",
       "updated_at": "2026-11-03T10:20:16Z",
-      "fork": false,
-      "topics": []
-    },
-    {
-      "name": "ScienceExperiment",
-      "full_name": "infinty420/ScienceExperiment",
-      "description": "智实验 SciLab - 理科 3D 虚拟实验室（物理/化学/生物/大学实验）PC + HarmonyOS",
-      "language": "HTML",
-      "html_url": "https://github.com/infinty420/ScienceExperiment",
-      "homepage": null,
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "pushed_at": "2026-10-25T14:55:06Z",
-      "updated_at": "2026-10-25T14:55:10Z",
       "fork": false,
       "topics": []
     },
